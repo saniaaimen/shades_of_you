@@ -608,9 +608,19 @@ function fixLook(raw, i){
   const c={}; for(const k of ROLES) c[k]=norm(raw.colors[k]);
   const notes=[];
   const dark = toOk(c.background).L < 0.5;
+  // 1. Cards on the other side of light/dark from the page can't share one text colour: bring them over to the page's side, same hue.
+  const sf=toOk(c.surface), bgL=toOk(c.background).L;
+  if((sf.L<0.5)!==dark){
+    c.surface = fromOk({...sf, L: dark ? Math.min(.45, bgL+.07) : Math.max(.88, bgL-.05), C: Math.min(sf.C, .08)});
+    notes.push(dark ? "We darkened the cards to match the page, so one text colour reads on both." : "We lightened the cards to match the page, so one text colour reads on both.");
+  }
+  // 2. Text must read on the page and on cards. If nudging can't get there, fall back to near-black or near-white.
   const t0=c.text;
   c.text = nudge(c.text,[c.background,c.surface],4.5, dark?1:-1);
-  if(c.text!==t0) notes.push(dark ? "We lightened the text a little so it's easy to read." : "We darkened the text a little so it's easy to read.");
+  if([c.background,c.surface].some(b=>ratio(c.text,b)<4.5)){
+    c.text = ["#111111","#F7F7F5"].sort((a,b)=>Math.min(ratio(b,c.background),ratio(b,c.surface))-Math.min(ratio(a,c.background),ratio(a,c.surface)))[0];
+  }
+  if(c.text!==t0) notes.push(dark ? "We lightened the text so it reads on the page and on cards." : "We darkened the text so it reads on the page and on cards.");
   let lab = isHex(raw.colors.primary_label) ? norm(raw.colors.primary_label) : null;
   if(!lab || ratio(lab,c.primary)<4.5){
     const best = ["#FFFFFF", c.text, c.background].sort((a,b)=>ratio(b,c.primary)-ratio(a,c.primary))[0];
@@ -802,7 +812,7 @@ function revealHTML(){
           <span class="chip"></span>
           <span class="tx"><b>${ROLE_NAME[k]}</b><small>${L.c[k]}</small>${APP.spots?.[k]?.added?`<em>Added, not in your photo</em>`:""}</span>
         </li>`).join("")}</ul>
-      <p class="checknote">Every colour is checked so text stays easy to read.</p>
+      <p class="checknote">${readability(L).length ? "Some text in this look may be hard to read." : "We checked every piece of text in the previews: all of it is easy to read."}</p>
     </div>
   </div>`;
 }
@@ -888,6 +898,24 @@ function cropRect(iw, ih, w, h, fx, fy){
   return {sx, sy, sw, sh, k};
 }
 const g8 = v => Math.ceil(v/8)*8;   // snap to the 8px grid
+const mixHex=(fg,bg,a)=>{ const f=rgb(fg), b=rgb(bg); return "#"+f.map((v,i)=>Math.round(v*a+b[i]*(1-a)).toString(16).padStart(2,"0")).join(""); };
+/* The final check: every piece of text the previews draw, against what it actually sits on (WCAG AA). */
+function readability(L, FP=curPair()){
+  const fails=[];
+  for(const [type] of TYPES){
+    const P=buildPreview(type, L, APP.preview, FP).P;
+    P.forEach((q,i)=>{ if(q.t!=="t") return;
+      const cx=q.x+Math.min(q.w, measure(q.s,q.font,q.ls||0))/2, cy=q.y+q.h/2; let bg=L.c.background;
+      for(let j=i-1;j>=0;j--){ const b=P[j];
+        if(b.t==="r" && !b.stroke && (b.a??1)>=.99 && cx>=b.x&&cx<=b.x+b.w&&cy>=b.y&&cy<=b.y+b.h){ bg=b.fill; break; }
+        if(b.t==="art" && cx>=b.x&&cx<=b.x+b.w&&cy>=b.y&&cy<=b.y+b.h){ bg=b.ground; break; } }
+      const col=(q.a??1)<1 ? mixHex(q.col,bg,q.a) : q.col, m=q.font.match(/^(\d+) ([\d.]+)px/), wt=+m[1], sz=+m[2];
+      const need = (sz>=24 || (sz>=18.66 && wt>=700)) ? 3 : 4.5;
+      if(ratio(col,bg)<need) fails.push({type, s:q.s, col, bg, r:ratio(col,bg)});
+    });
+  }
+  return fails;
+}
 function buildPreview(type, L, pv, FP=curPair()){
   const [W,H]=PV_SIZE[type], c=L.c, lab=L.label, HF=FP.heading, BF=FP.body;
   const F=pv.focus||{x:.5,y:.5}, P=[];
@@ -913,6 +941,7 @@ function buildPreview(type, L, pv, FP=curPair()){
   // a text block: returns its height. Headlines use line height 1.2, everything else 1.5.
   const text=(s,x,y,w,size,weight,fam,col,{lh=1.5,max=2,align="left",a=1}={})=>{
     const fnt=font(weight,size,fam), lines=wrap(s,fnt,w,max), h=Math.round(size*lh);
+    if(a<1){ const bgc=c.background; const need=size>=24?3:4.5; while(a<1 && ratio(mixHex(col,bgc,a),bgc)<need) a=Math.min(1,a+.04); }
     lines.forEach((ln,i)=>P.push({t:"t",x,y:y+i*h,w,h,font:fnt,col,s:ln,align,a}));
     return lines.length*h;
   };
@@ -1109,7 +1138,7 @@ function fillMeta(){
   setGray(false);
   $("gverdict").textContent=grayVerdict(L);
   $("lkName").textContent=L.name; $("lkDesc").textContent=L.description;
-  $("lkFix").textContent=L.notes.join(" ");
+  $("lkFix").textContent=[...L.notes, ...(readability(L).length ? ["Some text in this look may be hard to read."] : [])].join(" ");
   $("swatches").innerHTML=ROLES.map(k=>`<button class="swb" type="button" data-hex="${L.c[k]}" aria-label="${ROLE_NAME[k]} ${L.c[k]}. Copy code">
     <span class="c" style="--c:${L.c[k]}"></span><span class="cp">${ICON_COPY}</span><span><b>${ROLE_NAME[k]}</b><code>${L.c[k]}</code></span></button>`).join("");
   fillShufflers();

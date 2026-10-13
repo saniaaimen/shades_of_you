@@ -1,0 +1,279 @@
+{
+ "_about": "AI answers used by the readability test. 'tricky' holds looks a model can plausibly return that are hard to make readable.",
+ "socks": {
+  "preview": {
+   "type": "website",
+   "title": "Sock Party",
+   "headline": "Loud socks for good days",
+   "subline": "Bold, comfy pairs that make every outfit grin.",
+   "button": "Shop socks",
+   "labels": [
+    "New in",
+    "Bundles",
+    "Gift a pair"
+   ],
+   "card_title": "Mix-and-match packs",
+   "card_text": "Five pairs, zero matching rules.",
+   "focus": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "looks": [
+   {
+    "name": "Jewel",
+    "description": "Deep plum and gold, calm and polished.",
+    "colors": {
+     "background": "#F6F1EE",
+     "surface": "#FFFFFF",
+     "text": "#1F181C",
+     "primary": "#5B2A47",
+     "primary_label": "#FFFFFF",
+     "accent": "#A8730A"
+    }
+   },
+   {
+    "name": "Silk",
+    "description": "Pale blush, airy and soft.",
+    "colors": {
+     "background": "#FCF8F7",
+     "surface": "#F3E9EA",
+     "text": "#2A2226",
+     "primary": "#8A4A66",
+     "primary_label": "#FFFFFF",
+     "accent": "#2F7E86"
+    }
+   },
+   {
+    "name": "Velvet night",
+    "description": "Near-black plum with a warm glint.",
+    "colors": {
+     "background": "#17111A",
+     "surface": "#241B28",
+     "text": "#F2EAF2",
+     "primary": "#D8A7C4",
+     "primary_label": "#17111A",
+     "accent": "#E9B949"
+    }
+   },
+   {
+    "name": "Opulent",
+    "description": "Rich magenta and teal, confident.",
+    "colors": {
+     "background": "#FFFFFF",
+     "surface": "#FAF1F5",
+     "text": "#1C1420",
+     "primary": "#A3195B",
+     "primary_label": "#FFFFFF",
+     "accent": "#0E7480"
+    }
+   },
+   {
+    "name": "Quiet luxe",
+    "description": "Taupe and muted rose, understated.",
+    "colors": {
+     "background": "#EFEBE7",
+     "surface": "#F8F6F3",
+     "text": "#2C2827",
+     "primary": "#6E5560",
+     "primary_label": "#FFFFFF",
+     "accent": "#4E6E68"
+    }
+   }
+  ],
+  "font_pairs": [
+   16,
+   19,
+   17,
+   20,
+   26,
+   12,
+   23,
+   14
+  ]
+ },
+ "perfume": {
+  "preview": {
+   "type": "website",
+   "title": "Maison Velour",
+   "headline": "Scent that lingers like memory",
+   "subline": "Small-batch perfumes, blended slowly and bottled by hand.",
+   "button": "Explore scents",
+   "labels": [
+    "Collections",
+    "Our story",
+    "Stores"
+   ],
+   "card_title": "New: Velvet Oud",
+   "card_text": "Warm amber, smoke and a slow fade.",
+   "focus": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "looks": [
+   {
+    "name": "Jewel",
+    "description": "Deep plum and gold, calm and polished.",
+    "colors": {
+     "background": "#F6F1EE",
+     "surface": "#FFFFFF",
+     "text": "#1F181C",
+     "primary": "#5B2A47",
+     "primary_label": "#FFFFFF",
+     "accent": "#A8730A"
+    }
+   },
+   {
+    "name": "Silk",
+    "description": "Pale blush, airy and soft.",
+    "colors": {
+     "background": "#FCF8F7",
+     "surface": "#F3E9EA",
+     "text": "#2A2226",
+     "primary": "#8A4A66",
+     "primary_label": "#FFFFFF",
+     "accent": "#2F7E86"
+    }
+   },
+   {
+    "name": "Velvet night",
+    "description": "Near-black plum with a warm glint.",
+    "colors": {
+     "background": "#17111A",
+     "surface": "#241B28",
+     "text": "#F2EAF2",
+     "primary": "#D8A7C4",
+     "primary_label": "#17111A",
+     "accent": "#E9B949"
+    }
+   },
+   {
+    "name": "Opulent",
+    "description": "Rich magenta and teal, confident.",
+    "colors": {
+     "background": "#FFFFFF",
+     "surface": "#FAF1F5",
+     "text": "#1C1420",
+     "primary": "#A3195B",
+     "primary_label": "#FFFFFF",
+     "accent": "#0E7480"
+    }
+   },
+   {
+    "name": "Quiet luxe",
+    "description": "Taupe and muted rose, understated.",
+    "colors": {
+     "background": "#EFEBE7",
+     "surface": "#F8F6F3",
+     "text": "#2C2827",
+     "primary": "#6E5560",
+     "primary_label": "#FFFFFF",
+     "accent": "#4E6E68"
+    }
+   }
+  ],
+  "font_pairs": [
+   1,
+   2,
+   4,
+   9,
+   8,
+   11,
+   14,
+   22
+  ]
+ },
+ "tricky": {
+  "preview": {
+   "type": "website",
+   "title": "Maison Velour",
+   "headline": "Scent that lingers like memory",
+   "subline": "Small-batch perfumes, blended slowly and bottled by hand.",
+   "button": "Explore scents",
+   "labels": [
+    "Collections",
+    "Our story",
+    "Stores"
+   ],
+   "card_title": "New: Velvet Oud",
+   "card_text": "Warm amber, smoke and a slow fade.",
+   "focus": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "font_pairs": [
+   14,
+   22,
+   1,
+   16,
+   9,
+   11,
+   26,
+   23
+  ],
+  "looks": [
+   {
+    "name": "Clay night",
+    "description": "Dark clay page, cream cards",
+    "colors": {
+     "background": "#2A2420",
+     "surface": "#F2EAD8",
+     "text": "#8FCFE0",
+     "primary": "#B5643C",
+     "primary_label": "#FFFFFF",
+     "accent": "#E8B04A"
+    }
+   },
+   {
+    "name": "Ink cards",
+    "description": "Pale page, inky cards",
+    "colors": {
+     "background": "#F4EFE6",
+     "surface": "#1F2A2E",
+     "text": "#2B2B2B",
+     "primary": "#C2185B",
+     "primary_label": "#FFFFFF",
+     "accent": "#2E7D8C"
+    }
+   },
+   {
+    "name": "Mid stone",
+    "description": "Mid-tone page",
+    "colors": {
+     "background": "#8E8A84",
+     "surface": "#A39E97",
+     "text": "#1E1E1E",
+     "primary": "#3D5A80",
+     "primary_label": "#FFFFFF",
+     "accent": "#F2C14E"
+    }
+   },
+   {
+    "name": "Pastel",
+    "description": "Soft pastels",
+    "colors": {
+     "background": "#FDF6F0",
+     "surface": "#F7E8EF",
+     "text": "#6E6A70",
+     "primary": "#E7A9C0",
+     "primary_label": "#FFFFFF",
+     "accent": "#F4C99B"
+    }
+   },
+   {
+    "name": "Night lilac",
+    "description": "Dark lilac",
+    "colors": {
+     "background": "#1D1726",
+     "surface": "#2A2235",
+     "text": "#B9A9D6",
+     "primary": "#C9B6F0",
+     "primary_label": "#1D1726",
+     "accent": "#7A5CC2"
+    }
+   }
+  ]
+ }
+}

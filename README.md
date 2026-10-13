@@ -55,3 +55,14 @@ Or from the terminal: `npx vercel`, then `npx vercel env add GROQ_API_KEY`, then
 | `RATE_PER_MINUTE` | `6` | Requests allowed per visitor per minute. |
 
 Note: on Groq, `qwen/qwen3.8-27b` is a **preview** model, which Groq says may be withdrawn at short notice. If that happens, set `GROQ_MODEL` to Groq's current vision model.
+
+## Readability test
+
+Every piece of text the 4 previews draw (which the brand sheet also uses) must meet WCAG AA against what it actually sits on. The test covers every look, every font pair, the built-in example and a set of tricky colour answers in `tests/fixtures.json`. It runs on every push (GitHub Actions → "Readability"), or locally:
+
+```
+npm i --no-save playwright@1.56.0 && npx playwright install chromium
+node tests/readability.mjs
+```
+
+When the AI's colours need a repair, the server logs the colour values only (no photo, no brief) under `[colours needing repair]` in Vercel's logs.
